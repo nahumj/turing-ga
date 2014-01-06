@@ -4,14 +4,15 @@ An implementation of the infinite tape needed by the turing computer.
 It is implemented as two stacks that increase in depth as symbols are
 written to them.
 
-The blank symbol is represented by 'None'.
+The blank symbol defaults to the integer 0.
 """
 
 class Tape(object):
-    def __init__(self):
+    def __init__(self, blank_symbol=0):
         self.left = []
         self.right = []
-        self.head = None
+        self.blank_symbol = blank_symbol
+        self.head = self.blank_symbol
 
     def read(self):
         return self.head
@@ -21,14 +22,14 @@ class Tape(object):
         if self.left:
             self.head = self.left.pop()
         else:
-            self.head = None
+            self.head = self.blank_symbol
 
     def shift_right(self):
         self.left.append(self.head)
         if self.right:
             self.head = self.right.pop()
         else:
-            self.head = None
+            self.head = self.blank_symbol
 
     def write(self, symbol):
         self.head = symbol
