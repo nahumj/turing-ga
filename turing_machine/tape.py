@@ -6,6 +6,7 @@ written to them.
 
 The blank symbol defaults to the integer 0.
 """
+from itertools import dropwhile
 
 class Tape(object):
     def __init__(self, blank_symbol=0):
@@ -33,4 +34,12 @@ class Tape(object):
 
     def write(self, symbol):
         self.head = symbol
+
+    def get_state(self):
+        is_blank_symbol = lambda x: x == self.blank_symbol
+        contents = list(dropwhile(is_blank_symbol, self.left))
+        head_index = len(contents)
+        contents.append(self.head)
+        contents.extend(reversed(list(dropwhile(is_blank_symbol, self.right))))
+        return contents, head_index
 
