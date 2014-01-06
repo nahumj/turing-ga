@@ -13,7 +13,7 @@ class Tape(object):
         self.right = []
         self.head = None
 
-    def head(self):
+    def read(self):
         return self.head
 
     def shift_left(self):
