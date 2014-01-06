@@ -39,3 +39,25 @@ class TestTape(TestCase):
         t2.shift_right()
         self.assertEqual(t2.read(), None)
 
+    def test_write(self):
+        t = Tape()
+        self.assertEqual(t.read(), 0)
+        t.write(1)
+        self.assertEqual(t.read(), 1)
+
+    def test_write_shift(self):
+        t = Tape()
+        t.write(1)
+        t.shift_left()
+        self.assertEqual(t.read(), 0)
+        t.shift_right()
+        self.assertEqual(t.read(), 1)
+        t.shift_right()
+        self.assertEqual(t.read(), 0)
+        t.write(2)
+        t.shift_right()
+        t.shift_left()
+        self.assertEqual(t.read(), 2)
+        t.shift_left()
+        self.assertEqual(t.read(), 1)
+
