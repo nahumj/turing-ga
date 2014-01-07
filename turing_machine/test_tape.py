@@ -91,3 +91,11 @@ class TestTape(TestCase):
         tape_contents, index = t.get_state()
         self.assertEqual(tape_contents, [2,1,0,3])
         self.assertEqual(index, 2)
+
+    def test_get_state_shift(self):
+        t = Tape()
+        t.write(1)
+        t.shift_left()
+        tape_contents, index = t.get_state()
+        self.assertEqual(tape_contents, [0,1])
+        self.assertEqual(index, 0)
