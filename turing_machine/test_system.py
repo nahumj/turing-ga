@@ -70,4 +70,18 @@ class TestSystem(TestCase):
         self.assertEqual(contents, 6 * [1])
         self.assertEqual(index, 4)
 
-
+    def test_iterate_until_halt_max(self):
+        rules = [
+                Rule("A", 0, 1, True, "B"),
+                Rule("B", 0, 1, False, "A"),
+                Rule("C", 0, 1, False, "B"),
+                Rule("A", 1, 1, False, "C"),
+                Rule("B", 1, 1, True, "B"),
+                Rule("C", 1, 1, True, "HALT"),
+                ]
+        m = Machine(rules)
+        t = Tape()
+        s = System(m, t)
+        steps = s.iterate_until_halt(max_steps=10)
+        self.assertEqual(steps, 10)
+        self.assertNotEqual(s.machine.state, "HALT")
