@@ -18,6 +18,10 @@ Rule = namedtuple('Rule', ['current_state', 'read_symbol',
     'write_symbol', 'shift_right', 'next_state'])
 
 class Halt(Exception):
+    """
+    This exception is raised when the machine reaches a state/symbol
+    configuration that has no associated rule.
+    """
     pass
 
 class Machine(object):
@@ -30,6 +34,13 @@ class Machine(object):
             self.state = start_state
 
     def next(self, symbol):
+        """
+        Requires a symbol (read from the tape), returns the symbol to write
+        and if the machine should shift to the right.
+        It also updates the state.
+
+        Note: Unexpected symbol/state configutation raise a Halt exception.
+        """
         try:
             write_symbol, shift_right, next_state = self.rules[
                 (self.state, symbol)]
@@ -37,7 +48,3 @@ class Machine(object):
             raise Halt()
         self.state = next_state
         return write_symbol, shift_right
-
-
-
-
