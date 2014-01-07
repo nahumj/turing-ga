@@ -52,7 +52,7 @@ class Tape(object):
         """
         self.head = symbol
 
-    def get_state(self):
+    def get_contents_and_index(self):
         """
         Returns a list containing the portion of the tape that has been
         written to and the index of the head. Excludes leftmost and rightmost

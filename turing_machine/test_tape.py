@@ -61,20 +61,20 @@ class TestTape(TestCase):
         t.shift_left()
         self.assertEqual(t.read(), 1)
 
-    def test_get_state_blank(self):
+    def test_get_contents_and_index_blank(self):
         t = Tape()
-        tape_contents, index = t.get_state()
+        tape_contents, index = t.get_contents_and_index()
         self.assertEqual(tape_contents, [0])
         self.assertEqual(index, 0)
 
-    def test_get_state_write(self):
+    def test_get_contents_and_index_write(self):
         t = Tape()
         t.write(1)
-        tape_contents, index = t.get_state()
+        tape_contents, index = t.get_contents_and_index()
         self.assertEqual(tape_contents, [1])
         self.assertEqual(index, 0)
 
-    def test_get_state_write_shfit(self):
+    def test_get_contents_and_index_write_shfit(self):
         t = Tape()
         t.write(1)
         t.shift_left()
@@ -88,14 +88,14 @@ class TestTape(TestCase):
         t.shift_right()
         t.shift_left()
         t.shift_left()
-        tape_contents, index = t.get_state()
+        tape_contents, index = t.get_contents_and_index()
         self.assertEqual(tape_contents, [2,1,0,3])
         self.assertEqual(index, 2)
 
-    def test_get_state_shift(self):
+    def test_get_contents_and_index_shift(self):
         t = Tape()
         t.write(1)
         t.shift_left()
-        tape_contents, index = t.get_state()
+        tape_contents, index = t.get_contents_and_index()
         self.assertEqual(tape_contents, [0,1])
         self.assertEqual(index, 0)
