@@ -8,6 +8,10 @@ class Test_Machine(TestCase):
         r2 = Rule("A", 0, 1, True, "B")
         self.assertEqual(r, r2)
 
+    def test_machine_init_start_state(self):
+        m = Machine(rules=[], start_state="A")
+        self.assertEqual(m.state, "A")
+
     def test_machine_init(self):
         r1 = Rule("A", 0, 1, True, "B")
         r2 = Rule("A", 1, 1, True, "A")

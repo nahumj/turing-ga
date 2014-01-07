@@ -1,9 +1,22 @@
 from unittest import TestCase
-from system import System
+from system import System, DidNotHalt
 from machine import Rule, Halt, Machine
 from tape import Tape
 
 class TestSystem(TestCase):
+    def test_init_default(self):
+        rules = [
+                Rule("A", 0, 1, True, "B"),
+                Rule("B", 0, 1, False, "A"),
+                Rule("C", 0, 1, False, "B"),
+                Rule("A", 1, 1, False, "C"),
+                Rule("B", 1, 1, True, "B"),
+                Rule("C", 1, 1, True, "HALT"),
+                ]
+        m = Machine(rules)
+        s = System(m)
+        self.assertEqual(s.tape.read(), 0)
+
     def test_init(self):
         rules = [
                 Rule("A", 0, 1, True, "B"),
@@ -82,6 +95,6 @@ class TestSystem(TestCase):
         m = Machine(rules)
         t = Tape()
         s = System(m, t)
-        steps = s.iterate_until_halt(max_steps=10)
-        self.assertEqual(steps, 10)
+        with self.assertRaises(DidNotHalt):
+            s.iterate_until_halt(max_steps=10)
         self.assertNotEqual(s.machine.state, "HALT")
